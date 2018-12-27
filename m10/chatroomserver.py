@@ -1,12 +1,12 @@
 import socket
 import os
-from threading import *
+import threading
 import time
 import signal
 #main function
 def Main():
-	host = '10.1.133.72'
-	port = 1973
+	host = '127.0.0.1'
+	port = 5003
 	s = socket.socket()
 	s.bind((host,port))
 	print("Server Started....")
@@ -21,7 +21,7 @@ def Main():
 	while True:
 		c, addr = s.accept()
 		c.send("=========W3LC0M3 T0 CH4TR00M=========".encode())
-		c.send('Enter your Name: '.encode())
+		c.send(("\n" + "Enter your Name: ").encode())
 		clientid = c.recv(1024)
 		print('Connected User: ' + clientid.decode())
 		connectiondictionary[c] = str(clientid.decode())
@@ -30,7 +30,7 @@ def Main():
 			if c != connection:
 				connection.send((connectiondictionary[c] + ' is Connected.').encode())
 		#setting thread for each client.
-		Thread(target = chatclients, args = (c, addr, clientlist, connectiondictionary)).start()
+		threading.Thread(target = chatclients, args = (c, addr, clientlist, connectiondictionary)).start()
 	#closing server
 	s.close()
 #-----------------------------------------------------------------

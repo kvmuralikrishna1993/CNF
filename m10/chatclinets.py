@@ -1,10 +1,10 @@
 import socket
-from threading import *
+import threading
 import os,signal
 #main
 def Main():
-    host = '10.1.133.72'
-    port = 1304
+    host = '127.0.0.1'
+    port = 5003
     s = socket.socket()
     try:
         s.connect((host, port))
@@ -12,7 +12,7 @@ def Main():
         print("Sorry, you are Late..")
         return
     #thread for client
-    thread2 = Thread(target = send, args = (s,)).start()
+    thread2 = threading.Thread(target = send, args = (s,)).start()
     #disconnecting from chatroom
     while True:
         data = s.recv(1024).decode()
