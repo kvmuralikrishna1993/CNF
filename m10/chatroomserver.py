@@ -49,13 +49,13 @@ def chatclients(c, addr, clientlist, connectiondictionary):
 	while True:
 		try:
 			message = (c.recv(1024)).decode()
-			print(connectiondictionary[c] + '<-->' + message)
+			print(connectiondictionary[c] + '::' + message)
 			if message != 'x' and c in clientlist:
 				for client in clientlist:
 					if c != client:
 						try:
 							clientname = connectiondictionary[c]
-							client.send((clientname + '-->' + message).encode())
+							client.send((clientname + '::' + message).encode())
 						except:
 							c.close()
 							removeclient(c, clientlist)
